@@ -9,6 +9,11 @@ Welcome to my NumPy learning repository! This repository tracks my step-by-step 
 - **Data Types (`dtypes`) & Precision:** 
   - Explicitly specifying data types (`int32`, `float32`, `float64`).
   - Analyzing memory and floating-point precision differences between `float32` and `float64`.
+  - Comprehensive Dtype Registry (integers, floats, Unicode strings, objects, datetimes).
+- **Memory Architecture (`Copy` vs. `View`):**
+  - Independent memory buffer allocation using `.copy()`.
+  - Shared memory pointers via `.view()` and slicing implications.
+  - Verifying array memory ownership using the `.base` attribute.
 - **Boolean Masking (Conditional Selection):** Filtering array elements based on logical conditions (e.g., `arr[arr > 15]`).
 - **Common Pitfalls & Debugging:** 
   - Resolving `TypeError: 'numpy.ndarray' object is not callable` (using `[]` instead of `()`).
@@ -19,6 +24,7 @@ Welcome to my NumPy learning repository! This repository tracks my step-by-step 
 1. **Square Brackets `[...]` for Indexing:** Always use `[]` for slicing and filtering. Round brackets `()` are strictly reserved for function calls.
 2. **Slicing Syntax:** Follows `[start:stop:step]` where the `stop` index is excluded.
 3. **3D Array Syntax:** Access elements using `[depth/matrix_index, row_index, column_index]`.
+4. **Memory Isolation:** Modifying a view mutates the original source array. Use `.copy()` when data independence is required.
 
 ---
 *Maintained as part of my Data Science learning journey.*
