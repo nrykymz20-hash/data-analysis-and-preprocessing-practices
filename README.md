@@ -20,25 +20,69 @@ Welcome to my NumPy learning repository! This repository tracks my step-by-step 
   - Resolving `TypeError: 'numpy.ndarray' object is not callable` (using `[]` instead of `()`).
   - Handling variable redefinition issues (`np.array = [...]`) and managing Jupyter Kernel restarts.
 
-### Module 02: `02_array_manipulation.ipynb`
-- **Array Reshaping & Dynamic Inference:** 
-  - Altering array dimensions using `.reshape()`.
-  - Utilizing dynamic dimension calculation with `-1`.
-  - Transforming arrays into 1D sequences, Row Vectors `(1, N)`, and Column Vectors `(N, 1)`.
-- **Flattening Techniques:** 
-  - Collapsing multi-dimensional arrays into a single dimension.
-  - Comparing `.flatten()` vs. `.ravel()` vs. `.reshape(-1)`.
-- **Memory Ownership Verification:** 
-  - Evaluating memory allocation behavior (Copy vs. View) using `.base`.
-  - Performance trade-offs between shared memory views and deep copies.
+# Module 02: Array Manipulation & Memory Architecture
 
-## 🛠️ Key Takeaways & Rules of Thumb
+Welcome to **Module 02** of the professional NumPy reference guide. This module covers array reshaping, transposing, flipping, joining/stacking, and splitting, with a primary focus on understanding NumPy's underlying **Memory Management Architecture** (Views vs. Deep Copies).
 
-1. **Square Brackets `[...]` for Indexing:** Always use `[]` for slicing and filtering. Round brackets `()` are strictly reserved for function calls.
-2. **Slicing Syntax:** Follows `[start:stop:step]` where the `stop` index is excluded.
-3. **3D Array Syntax:** Access elements using `[depth/matrix_index, row_index, column_index]`.
-4. **Memory Isolation:** Modifying a view mutates the original source array. Use `.copy()` or `.flatten()` when data independence is required.
-5. **Flattening Strategy:** Use `.ravel()` or `.reshape(-1)` for fast, memory-efficient operations (View); use `.flatten()` when you need a safe, isolated copy.
+---
 
+## 📌 Key Takeaways & Core Concepts
+
+1. **Shape Transformations & Metadata Operations (Views):**
+   - Altering the shape or orientation of an array (`reshape`, `transpose`/`.T`, `swapaxes`, `flip`) creates a **View**. 
+   - These operations modify only the **metadata** (shape and strides) without moving or duplicating elements in the underlying contiguous memory buffer ($O(1)$ time and memory complexity).
+
+2. **Array Joining & Allocation (Deep Copies):**
+   - Combining distinct arrays (`concatenate`, `stack`, `vstack`, `hstack`, `dstack`, `column_stack`) requires allocating a **brand-new contiguous memory block** (**Deep Copy**, $O(N)$ memory complexity).
+   - `result.base` evaluates to `None` for joining operations.
+
+3. **Array Splitting & Slicing (Views):**
+   - Dividing existing arrays into sub-arrays (`split`, `vsplit`, `hsplit`, `dsplit`) returns **Views** of the parent memory buffer.
+   - Modifying a sub-array mutates the original parent array, and `sub_array.base` references the original parent object.
+
+---
+
+## 🛠️ Summary of Operations & Memory Behavior
+
+| Operation Category | Functions / Methods | Target Axis / Dimension | Memory Behavior | `.base` Property | Time/Memory Overhead |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Reshaping** | `.reshape()`, `.ravel()` | All axes | **View** (usually) | References Parent | $O(1)$ |
+| **Flattening** | `.flatten()` | All axes (to 1D) | **Deep Copy** | `None` | $O(N)$ |
+| **Transposing** | `.T`, `.transpose()`, `.swapaxes()` | Axis Permutation | **View** | References Parent | $O(1)$ |
+| **Flipping** | `np.flip()` | Specified axis | **View** | References Parent | $O(1)$ |
+| **Joining / Stacking** | `np.concatenate()`, `np.vstack()`, `np.hstack()`, `np.stack()`, `np.dstack()`, `np.column_stack()` | Axis 0, 1, 2, or New Axis | **Deep Copy** | `None` | $O(N)$ |
+| **Splitting** | `np.split()`, `np.vsplit()`, `np.hsplit()`, `np.dsplit()` | Axis 0, 1, or 2 | **View** | References Parent | $O(1)$ |
+
+---
+
+## 📏 Dimensionality Rules Cheat Sheet
+
+- **`np.hstack` vs. `np.column_stack`:**
+  - For 1D arrays, `np.hstack` concatenates end-to-end into a **1D array** shape `(N1+N2,)`.
+  - `np.column_stack` stacks 1D arrays as columns into a **2D matrix** shape `(N, 2)`.
+- **`np.stack` vs. `np.concatenate`:**
+  - `np.concatenate` joins along an *existing* axis (dimension count remains unchanged).
+  - `np.stack` joins along a *new axis* (dimension count increases by 1).
+- **`np.dstack` / `np.dsplit`:**
+  - Operates along the 3rd dimension (`axis=2`, depth). 2D arrays stacked via `dstack` become a **3D array** shape `(rows, cols, depth)`.
+
+> ⚠️ **NumPy 2.0 API Note:** `np.row_stack` has been removed. Use `np.vstack` for vertical row-wise stacking.
+
+---
+
+## 💡 Rules of Thumb
+
+- **Joining Allocates ($O(N)$):** Combining separate buffers creates a new array (**Copy**).
+- **Splitting Slices ($O(1)$):** Slicing/splitting an existing array computes new strided offsets over the parent buffer (**View**).
+- **Metadata Is Cheap ($O(1)$):** Reshaping, transposing, and flipping only update shape/stride metadata.
+
+---
+
+## 📁 Repository Structure
+
+```text
+02_array_manipulation/
+├── 02_array_manipulation.ipynb   # Complete code examples, memory checks, and outputs
+└── README.md                     # Module documentation and architectural summary
 ---
 *Maintained as part of my Data Science learning journey.*
