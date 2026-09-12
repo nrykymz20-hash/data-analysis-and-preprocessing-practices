@@ -2,9 +2,11 @@
 
 Welcome to my NumPy learning repository! This repository tracks my step-by-step progress in mastering fundamental data science tools in Python using Jupyter Notebooks.
 
+---
+
 ## 📌 Topics Covered
 
-### Module 01: `01_numpy_basics.ipynb`
+### Module 01: NumPy Basics (`01_numpy_basics.ipynb`)
 - **Array Creation & Structure:** Working with 1D, 2D, and 3D NumPy arrays (`np.array`).
 - **Indexing & Slicing:** Efficiently accessing elements, full rows, matrices, and slicing multi-dimensional arrays (`[matrix, row, column]`).
 - **Data Types (`dtypes`) & Precision:** 
@@ -20,13 +22,13 @@ Welcome to my NumPy learning repository! This repository tracks my step-by-step 
   - Resolving `TypeError: 'numpy.ndarray' object is not callable` (using `[]` instead of `()`).
   - Handling variable redefinition issues (`np.array = [...]`) and managing Jupyter Kernel restarts.
 
-# Module 02: Array Manipulation & Memory Architecture
-
-Welcome to **Module 02** of the professional NumPy reference guide. This module covers array reshaping, transposing, flipping, joining/stacking, and splitting, with a primary focus on understanding NumPy's underlying **Memory Management Architecture** (Views vs. Deep Copies).
-
 ---
 
-## 📌 Key Takeaways & Core Concepts
+### Module 02: Array Manipulation & Memory Architecture (`02_array_manipulation.ipynb`)
+
+Focuses on array reshaping, transposing, flipping, joining/stacking, and splitting, with an emphasis on understanding NumPy's underlying **Memory Management Architecture** (Views vs. Deep Copies).
+
+#### 📌 Key Takeaways & Core Concepts
 
 1. **Shape Transformations & Metadata Operations (Views):**
    - Altering the shape or orientation of an array (`reshape`, `transpose`/`.T`, `swapaxes`, `flip`) creates a **View**. 
@@ -40,9 +42,7 @@ Welcome to **Module 02** of the professional NumPy reference guide. This module 
    - Dividing existing arrays into sub-arrays (`split`, `vsplit`, `hsplit`, `dsplit`) returns **Views** of the parent memory buffer.
    - Modifying a sub-array mutates the original parent array, and `sub_array.base` references the original parent object.
 
----
-
-## 🛠️ Summary of Operations & Memory Behavior
+#### 🛠️ Summary of Operations & Memory Behavior
 
 | Operation Category | Functions / Methods | Target Axis / Dimension | Memory Behavior | `.base` Property | Time/Memory Overhead |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -53,9 +53,7 @@ Welcome to **Module 02** of the professional NumPy reference guide. This module 
 | **Joining / Stacking** | `np.concatenate()`, `np.vstack()`, `np.hstack()`, `np.stack()`, `np.dstack()`, `np.column_stack()` | Axis 0, 1, 2, or New Axis | **Deep Copy** | `None` | $O(N)$ |
 | **Splitting** | `np.split()`, `np.vsplit()`, `np.hsplit()`, `np.dsplit()` | Axis 0, 1, or 2 | **View** | References Parent | $O(1)$ |
 
----
-
-## 📏 Dimensionality Rules Cheat Sheet
+#### 📏 Dimensionality Rules Cheat Sheet
 
 - **`np.hstack` vs. `np.column_stack`:**
   - For 1D arrays, `np.hstack` concatenates end-to-end into a **1D array** shape `(N1+N2,)`.
@@ -68,9 +66,7 @@ Welcome to **Module 02** of the professional NumPy reference guide. This module 
 
 > ⚠️ **NumPy 2.0 API Note:** `np.row_stack` has been removed. Use `np.vstack` for vertical row-wise stacking.
 
----
-
-## 💡 Rules of Thumb
+#### 💡 Rules of Thumb
 
 - **Joining Allocates ($O(N)$):** Combining separate buffers creates a new array (**Copy**).
 - **Splitting Slices ($O(1)$):** Slicing/splitting an existing array computes new strided offsets over the parent buffer (**View**).
@@ -81,8 +77,9 @@ Welcome to **Module 02** of the professional NumPy reference guide. This module 
 ## 📁 Repository Structure
 
 ```text
-02_array_manipulation/
-├── 02_array_manipulation.ipynb   # Complete code examples, memory checks, and outputs
-└── README.md                     # Module documentation and architectural summary
----
-*Maintained as part of my Data Science learning journey.*
+numpy-fundamentals/
+├── 01_numpy_basics/
+│   └── 01_numpy_basics.ipynb       # Module 01 notebook
+├── 02_array_manipulation/
+│   └── 02_array_manipulation.ipynb # Module 02 notebook
+└── README.md                       # Main repository documentation
