@@ -74,6 +74,51 @@ Focuses on array reshaping, transposing, flipping, joining/stacking, and splitti
 
 ---
 
+### Module 03: Searching & Sorting Operations (`03_searching_and_sorting.ipynb`)
+
+Focuses on vector searching, binary search lookup, conditional evaluation, indexing algorithms, and linear-time partial selection mechanics.
+
+#### 📌 Key Takeaways & Core Concepts
+
+1. **In-Place vs. Out-of-Place Sorting:**
+   - `np.sort(a)` returns a sorted **Deep Copy** ($O(N)$ memory), whereas `a.sort()` mutates the array **In-Place** ($O(1)$ auxiliary memory).
+   - Indirect sorting with `np.argsort()` yields sorting integer indices, essential for maintaining relational alignment across associated arrays.
+
+2. **Logarithmic Lookup ($O(\log N)$):**
+   - `np.searchsorted()` executes a binary search over pre-sorted arrays.
+   - The `side` parameter controls insertion bounds for duplicate values (`side='left'` inserts before existing duplicates, `side='right'` inserts after).
+
+3. **Conditional Indexing & Set Membership:**
+   - Vectorized ternary branching with `np.where(cond, x, y)` and set evaluation via `np.isin(element, test)` return boolean arrays for memory-efficient masking (`arr[mask]`).
+   - `np.nonzero()` and `np.flatnonzero()` extract non-zero array coordinate tuples and linear indices respectively.
+
+4. **Linear-Time Partial Selection ($O(N)$):**
+   - `np.partition()` and `np.argpartition()` rearrange arrays around the $k$-th position in linear time $O(N)$, outperforming full sorting $O(N \log N)$ when selecting Top-$K$ or Bottom-$K$ elements.
+
+#### 🛠️ Summary of Operations & Complexity
+
+| Function / Method | Primary Functionality | Average Time Complexity | Auxiliary Space Complexity | Memory Ownership Output |
+| :--- | :--- | :--- | :--- | :--- |
+| **`np.sort(a)`** | Returns a sorted copy of an array | $O(N \log N)$ | $O(N)$ | **New Array (Copy)** (`.base is None`) |
+| **`a.sort()`** | Sorts array directly in-place | $O(N \log N)$ | $O(1)$ | **In-Place Mutation** (Returns `None`) |
+| **`np.argsort(a)`** | Returns indices that would sort an array | $O(N \log N)$ | $O(N)$ | **New Array (Copy)** of integer indices |
+| **`np.where(cond)`** | Returns index tuple where condition is `True` | $O(N)$ | $O(N)$ | **New Tuple of Arrays** |
+| **`np.where(cond, x, y)`** | Element-wise ternary substitution | $O(N)$ | $O(N)$ | **New Array (Copy)** |
+| **`np.searchsorted(a, v)`**| Binary search for insertion indices | $O(K \log N)$ | $O(K)$ | **New Array (Copy)** of integer indices |
+| **`np.isin(element, test)`**| Vectorized set membership evaluation | $O(N \times M)$ | $O(N)$ | **New Boolean Mask Array** |
+| **`np.nonzero(a)`** | Returns tuple of non-zero element indices | $O(N)$ | $O(N)$ | **New Tuple of Arrays** |
+| **`np.flatnonzero(a)`** | Returns 1D non-zero indices on flattened view | $O(N)$ | $O(N)$ | **New 1D Array (Copy)** |
+| **`np.lexsort(keys)`** | Indirect stable multi-key sort | $O(N \log N)$ | $O(N)$ | **New Array (Copy)** of integer indices |
+| **`np.partition(a, kth)`**| Partial sorting around the $k$-th element | $O(N)$ | $O(N)$ | **New Array (Copy)** |
+
+#### 💡 Rules of Thumb
+
+- **In-Place for Memory ($O(1)$):** Use `a.sort()` on large arrays when memory efficiency is primary.
+- **Binary Search Needs Sorting ($O(\log N)$):** Always sort base arrays before using `np.searchsorted()`.
+- **Top-K Efficiency ($O(N)$ vs $O(N \log N)$):** Never use `np.sort()` if you only need Top-$K$ values; use `np.partition()` instead.
+
+---
+
 ## 📁 Repository Structure
 
 ```text
@@ -82,4 +127,6 @@ numpy-fundamentals/
 │   └── 01_numpy_basics.ipynb       # Module 01 notebook
 ├── 02_array_manipulation/
 │   └── 02_array_manipulation.ipynb # Module 02 notebook
+├── 03_searching_and_sorting/
+│   └── 03_searching_and_sorting.ipynb # Module 03 notebook
 └── README.md                       # Main repository documentation
